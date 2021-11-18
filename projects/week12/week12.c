@@ -20,7 +20,7 @@ uint16_t value = 0;
 uint16_t pos_x = 0;
 uint16_t pos_y = 0;
 uint16_t tim2_counter = 0;
-
+vu32 ADC_Value;
 
 void RCC_Configure(void) // stm32f10x_rcc.h Âü°í
 {
@@ -112,7 +112,7 @@ void DMA_Configure(void) {
     DMA_InitTypeDef DMA_InitStructure; 
     DMA_DeInit(DMA1_Channel1); 
     DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t) &ADC1->DR; 
-    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) ADC_Value; 
+    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &ADC_Value; 
     DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC; 
     DMA_InitStructure.DMA_BufferSize = 2; 
     DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable; 
@@ -200,6 +200,8 @@ int main(void)
     
     ADC_start();
     int idx = 0;
+
+    int dma_value = ADC_Value;
     while (1) {
         // TODO: implement 
         LCD_ShowString(10, 10, "Team 02", BLACK, WHITE);
